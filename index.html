@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Snake Game!</title>
+    <style type="text/css">
+        .game-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .game-container > .game-area {
+            border: 1px solid black;
+            display: inline-block;
+        }
+        .game-container > .game-area {
+            margin: 0 auto;
+        }
+        .game-container > .game-area > .row {
+            overflow: hidden;
+        }
+        .game-container > .game-area > .row > .cell {
+            border: 1px solid rgba(0, 0, 0, .1);
+            width: 5px;
+            height: 5px;
+            display: block;
+            float: left;
+        }
+    </style>
+</head>
+<body>
+
+<div class="game-container">
+    <div class="game-area">
+    </div>
+</div>
+
+<script type="text/javascript" src="core.js"></script>
+</body>
+</html>
