@@ -6,15 +6,11 @@
     <title>Snake Game!</title>
     <style type="text/css">
         .game-container {
-            max-width: 1000px;
-            margin: 0 auto;
+            text-align: center;
         }
         .game-container > .game-area {
             border: 1px solid black;
             display: inline-block;
-        }
-        .game-container > .game-area {
-            margin: 0 auto;
         }
         .game-container > .game-area > .row {
             overflow: hidden;
@@ -26,6 +22,10 @@
             display: block;
             float: left;
         }
+        .game-container > .game-area > .row > .cell.black {
+            background-color: black;
+            border-color: black;
+        }
     </style>
 </head>
 <body>
@@ -35,6 +35,7 @@
     </div>
 </div>
 
+<script type="text/javascript" src="snake.js"></script>
 <script type="text/javascript" src="core.js"></script>
 </body>
 </html>
