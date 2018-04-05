@@ -4,7 +4,7 @@ let Snake = function () {
     let snake = this;
     
     snake.snake = [];
-    snake.difficulty = 1;
+    snake.difficulty = 5;
     snake.gameArea = document.getElementsByClassName('game-area')[0];
     snake.startButton = document.getElementById('start-game');
     snake.stopButton = document.getElementById('stop-game');
@@ -23,11 +23,12 @@ let Snake = function () {
 };
 
 Snake.prototype.createGameArea = function (row = 64, cell = 64) {
+    let snake = this;
     let rowElement, cellElement, rowi, celli;
 
-    this.rowLength = row;
-    this.cellLength = cell;
-    this.gameArea.innerHTML = '';
+    snake.rowLength = row;
+    snake.cellLength = cell;
+    snake.gameArea.innerHTML = '';
 
     for (rowi = 1; rowi <= row; rowi++) {
         rowElement = document.createElement('div');
@@ -41,10 +42,10 @@ Snake.prototype.createGameArea = function (row = 64, cell = 64) {
             rowElement.append(cellElement);
         }
 
-        this.gameArea.append(rowElement);
+        snake.gameArea.append(rowElement);
     }
 
-    this.newSnake();
+    snake.newSnake();
 };
 
 Snake.prototype.newSnake = function () {
@@ -61,6 +62,7 @@ Snake.prototype.newSnake = function () {
 };
 
 Snake.prototype.renderGameArea = function () {
+    let snake = this;
     let cell, cellIndex, cellX, cellY;
     let snakeCell, snakeIndex;
     let cells = document.getElementsByClassName('cell');
@@ -74,8 +76,8 @@ Snake.prototype.renderGameArea = function () {
             cellX = cell.getAttribute('data-x');
             cellY = cell.getAttribute('data-y');
 
-            for (snakeIndex in this.snake) {
-                snakeCell = this.snake[snakeIndex];
+            for (snakeIndex in snake.snake) {
+                snakeCell = snake.snake[snakeIndex];
 
                 if (snakeCell.x == cellX && snakeCell.y == cellY) {
                     isSnakeCell = true;
@@ -92,15 +94,46 @@ Snake.prototype.renderGameArea = function () {
 };
 
 Snake.prototype.startGame = function () {
-    this.interval = setInterval(function () {
-        console.log(true);
-    }, 500 / this.difficulty);
-    this.startButton.style.display = 'none';
-    this.stopButton.style.display = 'block';
+    let snake = this;
+    snake.interval = setInterval(function () {
+        snake.move();
+    }, 1000 / snake.difficulty);
+    snake.startButton.style.display = 'none';
+    snake.stopButton.style.display = 'block';
 };
 
 Snake.prototype.stopGame = function () {
-    clearInterval(this.interval);
-    this.startButton.style.display = 'block';
-    this.stopButton.style.display = 'none';
+    let snake = this;
+    clearInterval(snake.interval);
+    snake.startButton.style.display = 'block';
+    snake.stopButton.style.display = 'none';
+};
+
+Snake.prototype.move = function () {
+    let snake = this;
+    let firstSnakeCell = snake.snake[0];
+    let newSnakeCell = {};
+
+    switch (snake.direction) {
+        case 'up':
+            newSnakeCell.x = firstSnakeCell.x - 1;
+            newSnakeCell.y = firstSnakeCell.y;
+            break;
+        case 'down':
+            newSnakeCell.x = firstSnakeCell.x + 1;
+            newSnakeCell.y = firstSnakeCell.y;
+            break;
+        case 'left':
+            newSnakeCell.x = firstSnakeCell.x;
+            newSnakeCell.y = firstSnakeCell.y - 1;
+            break;
+        case 'right':
+            newSnakeCell.x = firstSnakeCell.x;
+            newSnakeCell.y = firstSnakeCell.y + 1;
+            break;
+    }
+
+    snake.snake.unshift(newSnakeCell);
+    snake.snake.splice(snake.snake.length - 1, 1);
+    snake.renderGameArea();
 };
