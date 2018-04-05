@@ -4,7 +4,7 @@ let Snake = function () {
     let snake = this;
     
     snake.snake = [];
-    snake.difficulty = 5;
+    snake.difficulty = 10;
     snake.gameArea = document.getElementsByClassName('game-area')[0];
     snake.startButton = document.getElementById('start-game');
     snake.stopButton = document.getElementById('stop-game');
@@ -13,6 +13,7 @@ let Snake = function () {
     snake.direction = 'up';
     snake.directions = ['up', 'down', 'left', 'right'];
     snake.interval = null;
+    snake.gameStarted = false;
 
     snake.startButton.addEventListener('click', function () {
         snake.startGame();
@@ -20,6 +21,25 @@ let Snake = function () {
     snake.stopButton.addEventListener('click', function () {
         snake.stopGame();
     }, false);
+
+    document.onkeydown = function (event) {
+        if (snake.gameStarted) {
+            switch (event.keyCode) {
+                case 38:
+                    snake.direction = 'up';
+                    break;
+                case 40:
+                    snake.direction = 'down';
+                    break;
+                case 37:
+                    snake.direction = 'left';
+                    break;
+                case 39:
+                    snake.direction = 'right';
+                    break;
+            }
+        }
+    };
 };
 
 Snake.prototype.createGameArea = function (row = 64, cell = 64) {
@@ -95,15 +115,17 @@ Snake.prototype.renderGameArea = function () {
 
 Snake.prototype.startGame = function () {
     let snake = this;
+    snake.gameStarted = true;
     snake.interval = setInterval(function () {
         snake.move();
-    }, 1000 / snake.difficulty);
+    }, 400 / snake.difficulty);
     snake.startButton.style.display = 'none';
     snake.stopButton.style.display = 'block';
 };
 
 Snake.prototype.stopGame = function () {
     let snake = this;
+    snake.gameStarted = false;
     clearInterval(snake.interval);
     snake.startButton.style.display = 'block';
     snake.stopButton.style.display = 'none';
