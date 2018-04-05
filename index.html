@@ -5,6 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Snake Game!</title>
     <style type="text/css">
+        @font-face {
+            font-family: 'PressStart2P';
+            src: url('font/PressStart2P.ttf');
+        }
+        body {
+            font-family: PressStart2P;
+        }
+        .text-center {
+            text-align: center;
+        }
+        #start-game, #stop-game {
+            text-decoration: underline;
+        }
+        #start-game:hover, #stop-game:hover {
+            cursor: pointer;
+        }
+        #stop-game {
+            display: none;
+        }
         .game-container {
             text-align: center;
         }
@@ -31,6 +50,8 @@
 <body>
 
 <div class="game-container">
+    <h3 class="text-center" id="start-game">Start Game</h3>
+    <h3 class="text-center" id="stop-game">Stop Game</h3>
     <div class="game-area">
     </div>
 </div>
