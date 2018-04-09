@@ -26,22 +26,35 @@ let Snake = function () {
         if (snake.gameStarted) {
             switch (event.keyCode) {
                 case 38:
-                    snake.direction = 'up';
+                    if (snake.direction !== 'down') {
+                        snake.direction = 'up';
+                    }
                     break;
                 case 40:
-                    snake.direction = 'down';
+                    if (snake.direction !== 'up') {
+                        snake.direction = 'down';
+                    }
                     break;
                 case 37:
-                    snake.direction = 'left';
+                    if (snake.direction !== 'right') {
+                        snake.direction = 'left';
+                    }
                     break;
                 case 39:
-                    snake.direction = 'right';
+                    if (snake.direction !== 'left') {
+                        snake.direction = 'right';
+                    }
                     break;
             }
         }
     };
 };
 
+/**
+ * Creates game area and new snake
+ * @param row
+ * @param cell
+ */
 Snake.prototype.createGameArea = function (row = 64, cell = 64) {
     let snake = this;
     let rowElement, cellElement, rowi, celli;
@@ -68,6 +81,9 @@ Snake.prototype.createGameArea = function (row = 64, cell = 64) {
     snake.newSnake();
 };
 
+/**
+ * Creates new snake array
+ */
 Snake.prototype.newSnake = function () {
     this.snake = [];
 
@@ -81,6 +97,9 @@ Snake.prototype.newSnake = function () {
     this.renderGameArea();
 };
 
+/**
+ * Renders game area.
+ */
 Snake.prototype.renderGameArea = function () {
     let snake = this;
     let cell, cellIndex, cellX, cellY;
@@ -113,6 +132,9 @@ Snake.prototype.renderGameArea = function () {
     }
 };
 
+/**
+ * Start the game
+ */
 Snake.prototype.startGame = function () {
     let snake = this;
     snake.gameStarted = true;
@@ -123,6 +145,9 @@ Snake.prototype.startGame = function () {
     snake.stopButton.style.display = 'block';
 };
 
+/**
+ * Stop the game
+ */
 Snake.prototype.stopGame = function () {
     let snake = this;
     snake.gameStarted = false;
@@ -131,31 +156,49 @@ Snake.prototype.stopGame = function () {
     snake.stopButton.style.display = 'none';
 };
 
+/**
+ * Move the snake
+ */
 Snake.prototype.move = function () {
     let snake = this;
     let firstSnakeCell = snake.snake[0];
+    let lastSnakeCell = snake.snake[snake.snake.length - 1];
+    let cellCoordinates = "[data-x='" + lastSnakeCell.x + "'][data-y='" + lastSnakeCell.y + "']";
     let newSnakeCell = {};
+    let x, y, snakeCellElement;
+
+    // Make last snake cell's element background color to white
+    snakeCellElement = document.querySelector(cellCoordinates);
+    snakeCellElement.setAttribute('class', 'cell');
 
     switch (snake.direction) {
         case 'up':
-            newSnakeCell.x = firstSnakeCell.x - 1;
+            x = firstSnakeCell.x - 1;
+            newSnakeCell.x = x < 1 ? snake.rowLength : x;
             newSnakeCell.y = firstSnakeCell.y;
             break;
         case 'down':
-            newSnakeCell.x = firstSnakeCell.x + 1;
+            x = firstSnakeCell.x + 1;
+            newSnakeCell.x = x > snake.rowLength ? 1 : x;
             newSnakeCell.y = firstSnakeCell.y;
             break;
         case 'left':
+            y = firstSnakeCell.y - 1;
             newSnakeCell.x = firstSnakeCell.x;
-            newSnakeCell.y = firstSnakeCell.y - 1;
+            newSnakeCell.y = y < 1 ? snake.cellLength : y;
             break;
         case 'right':
+            y = firstSnakeCell.y + 1;
             newSnakeCell.x = firstSnakeCell.x;
-            newSnakeCell.y = firstSnakeCell.y + 1;
+            newSnakeCell.y = y > snake.cellLength ? 1 : y;
             break;
     }
 
+    //Make first snake cell's elenment background color to black
+    cellCoordinates = "[data-x='" + newSnakeCell.x + "'][data-y='" + newSnakeCell.y + "']";
+    snakeCellElement = document.querySelector(cellCoordinates);
+    snakeCellElement.setAttribute('class', 'cell black');
+
     snake.snake.unshift(newSnakeCell);
     snake.snake.splice(snake.snake.length - 1, 1);
-    snake.renderGameArea();
 };
