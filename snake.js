@@ -51,6 +51,22 @@ let Snake = function () {
 };
 
 /**
+ * Creates new snake array
+ */
+Snake.prototype.newSnake = function () {
+    this.snake = [];
+
+    for (let i = 0; i < 8; i++) {
+        this.snake.push({
+            x: Math.ceil(this.rowLength / 2) + i,
+            y: Math.ceil(this.cellLength / 2)
+        })
+    }
+
+    this.renderGameArea();
+};
+
+/**
  * Creates game area and new snake
  * @param row
  * @param cell
@@ -79,22 +95,6 @@ Snake.prototype.createGameArea = function (row = 64, cell = 64) {
     }
 
     snake.newSnake();
-};
-
-/**
- * Creates new snake array
- */
-Snake.prototype.newSnake = function () {
-    this.snake = [];
-
-    for (let i = 0; i < 8; i++) {
-        this.snake.push({
-            x: Math.ceil(this.rowLength / 2) + i,
-            y: Math.ceil(this.cellLength / 2)
-        })
-    }
-
-    this.renderGameArea();
 };
 
 /**
@@ -154,6 +154,12 @@ Snake.prototype.stopGame = function () {
     clearInterval(snake.interval);
     snake.startButton.style.display = 'block';
     snake.stopButton.style.display = 'none';
+};
+
+Snake.prototype.endGame = function () {
+    this.stopGame();
+    this.newSnake();
+    alert('Game Over!!');
 };
 
 /**
