@@ -24,23 +24,23 @@ let Snake = function () {
 
     document.onkeydown = function (event) {
         if (snake.gameStarted) {
-            switch (event.keyCode) {
-                case 38:
+            switch (event.key) {
+                case "ArrowUp":
                     if (snake.direction !== 'down') {
                         snake.direction = 'up';
                     }
                     break;
-                case 40:
+                case "ArrowDown":
                     if (snake.direction !== 'up') {
                         snake.direction = 'down';
                     }
                     break;
-                case 37:
+                case "ArrowLeft":
                     if (snake.direction !== 'right') {
                         snake.direction = 'left';
                     }
                     break;
-                case 39:
+                case "ArrowRight":
                     if (snake.direction !== 'left') {
                         snake.direction = 'right';
                     }
@@ -154,11 +154,14 @@ Snake.prototype.stopGame = function () {
     clearInterval(snake.interval);
     snake.startButton.style.display = 'block';
     snake.stopButton.style.display = 'none';
+    snake.newSnake();
 };
 
+/**
+ * Ends the game
+ */
 Snake.prototype.endGame = function () {
     this.stopGame();
-    this.newSnake();
     alert('Game Over!!');
 };
 
