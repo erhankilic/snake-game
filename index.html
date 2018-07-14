@@ -24,8 +24,14 @@
         #stop-game {
             display: none;
         }
+        .main-container {
+            width: 85%;
+            margin: 0 auto;
+        }
         .game-container {
             text-align: center;
+            float: left;
+            width: 70%;
         }
         .game-container > .game-area {
             border: 1px solid black;
@@ -45,15 +51,61 @@
             background-color: black;
             border-color: black;
         }
+        .game-setting {
+            text-align: center;
+            float: left;
+            width: 30%;
+        }
+        .game-setting > .setting-group {
+            margin-bottom: 10px;
+        }
+        .game-setting > .setting-group > label {
+            display: block;
+            font-size: .75em;
+            margin-bottom: 5px;
+        }
+        .game-setting > .setting-group > .setting {
+            display: inline-block;
+            margin: 0 auto;
+        }
     </style>
 </head>
 <body>
 
-<div class="game-container">
-    <h3 class="text-center" id="start-game">Start Game</h3>
-    <h3 class="text-center" id="stop-game">Stop Game</h3>
-    <h3 class="text-center" id="score-container"><u>Score</u> <br /><span id="score">0</span></h3>
-    <div class="game-area">
+<div class="main-container">
+    <div class="game-container">
+        <h3 class="text-center" id="start-game">Start Game</h3>
+        <h3 class="text-center" id="stop-game">Stop Game</h3>
+        <h3 class="text-center" id="score-container"><u>Score</u> <br /><span id="score">0</span></h3>
+        <div class="game-area"></div>
+    </div>
+
+    <div class="game-setting">
+        <h3>Game Settings</h3>
+
+        <div class="setting-group">
+            <label for="game-difficulty"><u>Game Difficulty</u></label>
+            <select name="gameDifficulty" class="setting" id="game-difficulty">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+                <option>7</option>
+                <option>8</option>
+                <option selected>9</option>
+                <option>10</option>
+            </select>
+        </div>
+        <div class="setting-group">
+            <label>Game Area (Row x Cell)</label>
+            <input type="number" id="row-length" class="setting" value="64" />
+            <input type="number" id="cell-length" class="setting" value="64" />
+            <br />
+            <br />
+            <button id="set-game-settings">Set Settings</button>
+        </div>
     </div>
 </div>
 

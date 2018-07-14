@@ -21,6 +21,11 @@ let Snake = function () {
         y: null
     };
 
+    if (!snake.gameArea || !snake.startButton || !snake.stopButton || !snake.scoreElement) {
+        alert("#game-area, #start-game, #stop-game, #score id elements are required!");
+        return;
+    }
+
     snake.startButton.addEventListener('click', function () {
         snake.startGame();
     }, false);
@@ -81,9 +86,14 @@ Snake.prototype.newSnake = function () {
  * @param row
  * @param cell
  */
-Snake.prototype.createGameArea = function (row = 64, cell = 64) {
+Snake.prototype.createGameArea = function (row, cell) {
     let snake = this;
     let rowElement, cellElement, rowi, celli;
+
+    if (!snake.gameArea) {
+        alert("#game-area id element is required!");
+        return;
+    }
 
     snake.rowLength = row;
     snake.cellLength = cell;
@@ -172,8 +182,8 @@ Snake.prototype.stopGame = function () {
  * Ends the game
  */
 Snake.prototype.endGame = function () {
+    alert('Game Over!! Yout score is ' + this.score);
     this.stopGame();
-    alert('Game Over!!');
 };
 
 /**
@@ -275,4 +285,35 @@ Snake.prototype.createRandomInt = function () {
     }
 
     return isSame ? snake.createRandomInt() : {x: x, y: y};
+};
+
+/**
+ * Set game difficulty
+ * @param value
+ */
+Snake.prototype.setDifficulty = function (value) {
+    if (!this.gameStarted) {
+        if (typeof value !== "number") {
+            alert("Difficulty must be number!");
+            return;
+        }
+
+        this.difficulty = value;
+    }
+};
+
+/**
+ * Set game area lengths
+ * @param rowLength
+ * @param cellLength
+ */
+Snake.prototype.setGameArea = function (rowLength, cellLength) {
+    if (!this.gameStarted) {
+        if (typeof rowLength !== "number" || typeof cellLength !== "number") {
+            alert("Row length and cell length must be number!");
+            return;
+        }
+
+        this.createGameArea(rowLength, cellLength);
+    }
 };
