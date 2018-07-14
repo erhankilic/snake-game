@@ -155,6 +155,7 @@ Snake.prototype.stopGame = function () {
     snake.startButton.style.display = 'block';
     snake.stopButton.style.display = 'none';
     snake.newSnake();
+    snake.direction = "up";
 };
 
 /**
@@ -201,6 +202,14 @@ Snake.prototype.move = function () {
             newSnakeCell.x = firstSnakeCell.x;
             newSnakeCell.y = y > snake.cellLength ? 1 : y;
             break;
+    }
+
+    // Check if snake is crashed with itself
+    for (let cell of snake.snake) {
+        if (cell.x == newSnakeCell.x && cell.y == newSnakeCell.y) {
+            snake.endGame();
+            return;
+        }
     }
 
     //Make first snake cell's elenment background color to black
