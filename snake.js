@@ -8,12 +8,14 @@ let Snake = function () {
     snake.gameArea = document.getElementsByClassName('game-area')[0];
     snake.startButton = document.getElementById('start-game');
     snake.stopButton = document.getElementById('stop-game');
+    snake.scoreElement = document.getElementById('score');
     snake.rowLength = 64;
     snake.cellLength = 64;
     snake.direction = 'up';
     snake.directions = ['up', 'down', 'left', 'right'];
     snake.interval = null;
     snake.gameStarted = false;
+    snake.score = 0;
     snake.bait = {
         x: null,
         y: null
@@ -58,16 +60,20 @@ let Snake = function () {
  * Creates new snake array
  */
 Snake.prototype.newSnake = function () {
-    this.snake = [];
+    let snake = this;
+    snake.snake = [];
 
     for (let i = 0; i < 8; i++) {
-        this.snake.push({
-            x: Math.ceil(this.rowLength / 2) + i,
-            y: Math.ceil(this.cellLength / 2)
+        snake.snake.push({
+            x: Math.ceil(snake.rowLength / 2) + i,
+            y: Math.ceil(snake.cellLength / 2)
         })
     }
 
-    this.renderGameArea();
+    snake.direction = "up";
+    snake.score = 0;
+
+    snake.renderGameArea();
 };
 
 /**
@@ -160,7 +166,6 @@ Snake.prototype.stopGame = function () {
     snake.startButton.style.display = 'block';
     snake.stopButton.style.display = 'none';
     snake.newSnake();
-    snake.direction = "up";
 };
 
 /**
@@ -216,6 +221,8 @@ Snake.prototype.move = function () {
     // If snake eats bait, create new bait, else continue the game
     if (newSnakeCell.x == snake.bait.x && newSnakeCell.y == snake.bait.y) {
         snake.createBait();
+        snake.score += snake.difficulty * 10;
+        snake.scoreElement.innerText = snake.score;
     } else {
         // Make last snake cell's element background color to white
         snakeCellElement = document.querySelector(cellCoordinates);
