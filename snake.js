@@ -14,6 +14,10 @@ let Snake = function () {
     snake.directions = ['up', 'down', 'left', 'right'];
     snake.interval = null;
     snake.gameStarted = false;
+    snake.bait = {
+        x: null,
+        y: null
+    };
 
     snake.startButton.addEventListener('click', function () {
         snake.startGame();
@@ -143,6 +147,7 @@ Snake.prototype.startGame = function () {
     }, 400 / snake.difficulty);
     snake.startButton.style.display = 'none';
     snake.stopButton.style.display = 'block';
+    snake.createBait();
 };
 
 /**
@@ -177,10 +182,6 @@ Snake.prototype.move = function () {
     let newSnakeCell = {};
     let x, y, snakeCellElement;
 
-    // Make last snake cell's element background color to white
-    snakeCellElement = document.querySelector(cellCoordinates);
-    snakeCellElement.setAttribute('class', 'cell');
-
     switch (snake.direction) {
         case 'up':
             x = firstSnakeCell.x - 1;
@@ -212,11 +213,59 @@ Snake.prototype.move = function () {
         }
     }
 
-    //Make first snake cell's elenment background color to black
-    cellCoordinates = "[data-x='" + newSnakeCell.x + "'][data-y='" + newSnakeCell.y + "']";
-    snakeCellElement = document.querySelector(cellCoordinates);
-    snakeCellElement.setAttribute('class', 'cell black');
+    // If snake eats bait, create new bait, else continue the game
+    if (newSnakeCell.x == snake.bait.x && newSnakeCell.y == snake.bait.y) {
+        snake.createBait();
+    } else {
+        // Make last snake cell's element background color to white
+        snakeCellElement = document.querySelector(cellCoordinates);
+        snakeCellElement.setAttribute('class', 'cell');
 
+        //Make first snake cell's elenment background color to black
+        cellCoordinates = "[data-x='" + newSnakeCell.x + "'][data-y='" + newSnakeCell.y + "']";
+        snakeCellElement = document.querySelector(cellCoordinates);
+        snakeCellElement.setAttribute('class', 'cell black');
+
+        // Remove last snake cell
+        snake.snake.splice(snake.snake.length - 1, 1);
+    }
+
+    // Add new cell to head of the snake
     snake.snake.unshift(newSnakeCell);
-    snake.snake.splice(snake.snake.length - 1, 1);
+};
+
+/**
+ * Create new bait
+ */
+Snake.prototype.createBait = function () {
+    let snake = this;
+    let bait = snake.createRandomInt();
+    let baitCoordinates, baitCell;
+    snake.bait.x = bait.x;
+    snake.bait.y = bait.y;
+
+    //Make first snake cell's elenment background color to black
+    baitCoordinates = "[data-x='" + bait.x + "'][data-y='" + bait.y + "']";
+    baitCell = document.querySelector(baitCoordinates);
+    baitCell.setAttribute('class', 'cell black');
+};
+
+/**
+ * Create random coordinates for bait
+ * @returns {{x: number, y: number}}
+ */
+Snake.prototype.createRandomInt = function () {
+    let snake = this;
+    let isSame = false;
+    let x = Math.floor(Math.random() * snake.rowLength) + 1;
+    let y = Math.floor(Math.random() * snake.cellLength) + 1;
+
+    for (let cell of snake.snake) {
+        if (cell.x == x && cell.y == y) {
+            isSame = true;
+            break;
+        }
+    }
+
+    return isSame ? snake.createRandomInt() : {x: x, y: y};
 };
