@@ -1,0 +1,85 @@
+@font-face {
+    font-family: 'PressStart2P';
+    src: url('../font/PressStart2P.ttf');
+}
+
+body {
+    font-family: PressStart2P, sans-serif;
+}
+
+.text-center {
+    text-align: center;
+}
+
+#start-game, #stop-game {
+    text-decoration: underline;
+}
+
+#start-game:hover, #stop-game:hover {
+    cursor: pointer;
+}
+
+
+.main-container {
+    width: 85%;
+    margin: 0 auto;
+}
+
+.game-container {
+    text-align: center;
+    float: left;
+    width: 70%;
+}
+
+#game-area {
+    border: 1px solid black;
+    display: inline-block;
+}
+
+#game-area > .row {
+    overflow: hidden;
+}
+
+.cell {
+    border-right: 1px solid rgba(0, 0, 0, .1);
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    width: 9px;
+    height: 9px;
+    display: block;
+    float: left;
+    /*margin: 1px;*/
+}
+
+.row .cell:first-of-type {
+    border-left: 1px solid rgba(0, 0, 0, .1);
+}
+
+#game-area .row:first-of-type .cell {
+    border-top: 1px solid rgba(0, 0, 0, .1);
+}
+
+.cell.black {
+    background-color: black;
+    border-color: black;
+}
+
+.game-setting {
+    text-align: center;
+    float: left;
+    width: 30%;
+}
+
+.setting-group {
+    margin-bottom: 10px;
+}
+
+.setting-group > label {
+    display: block;
+    font-size: .75em;
+    margin-bottom: 5px;
+}
+
+.setting {
+    display: inline-block;
+    margin: 0 auto;
+}
