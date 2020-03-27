@@ -4,112 +4,37 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Snake Game!</title>
-    <style type="text/css">
-        @font-face {
-            font-family: 'PressStart2P';
-            src: url('font/PressStart2P.ttf');
-        }
-        body {
-            font-family: PressStart2P;
-        }
-        .text-center {
-            text-align: center;
-        }
-        #start-game, #stop-game {
-            text-decoration: underline;
-        }
-        #start-game:hover, #stop-game:hover {
-            cursor: pointer;
-        }
-        #stop-game {
-            display: none;
-        }
-        .main-container {
-            width: 85%;
-            margin: 0 auto;
-        }
-        .game-container {
-            text-align: center;
-            float: left;
-            width: 70%;
-        }
-        .game-container > .game-area {
-            border: 1px solid black;
-            display: inline-block;
-        }
-        .game-container > .game-area > .row {
-            overflow: hidden;
-        }
-        .game-container > .game-area > .row > .cell {
-            border: 1px solid rgba(0, 0, 0, .1);
-            width: 5px;
-            height: 5px;
-            display: block;
-            float: left;
-        }
-        .game-container > .game-area > .row > .cell.black {
-            background-color: black;
-            border-color: black;
-        }
-        .game-setting {
-            text-align: center;
-            float: left;
-            width: 30%;
-        }
-        .game-setting > .setting-group {
-            margin-bottom: 10px;
-        }
-        .game-setting > .setting-group > label {
-            display: block;
-            font-size: .75em;
-            margin-bottom: 5px;
-        }
-        .game-setting > .setting-group > .setting {
-            display: inline-block;
-            margin: 0 auto;
-        }
-    </style>
+    <link href='css/index.css' rel='stylesheet' type='text/css'>
+    <script src="scripts/main.js" type="module" defer></script>
 </head>
 <body>
 
 <div class="main-container">
     <div class="game-container">
-        <h3 class="text-center" id="start-game">Start Game</h3>
-        <h3 class="text-center" id="stop-game">Stop Game</h3>
-        <h3 class="text-center" id="score-container"><u>Score</u> <br /><span id="score">0</span></h3>
-        <div class="game-area"></div>
+        <input type="button" class="text-center" id="start-game" value="START">
+        <input type="button" class="text-center" id="stop-game" value="STOP">
+        <h3 class="text-center" id="score-container"><u>Score</u> <br/><span id="score">0</span></h3>
+        <div id="game-area"></div>
     </div>
 
     <div class="game-setting">
         <h3>Game Settings</h3>
 
         <div class="setting-group">
-            <label for="game-difficulty"><u>Game Difficulty</u></label>
-            <select name="gameDifficulty" class="setting" id="game-difficulty">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-                <option>6</option>
-                <option>7</option>
-                <option>8</option>
-                <option selected>9</option>
-                <option>10</option>
-            </select>
+            <label for="game-difficulty"><u>Game Difficulty: </u><label for="game-difficulty"
+                                                                        id="game-difficulty-label"></label></label>
+            <input type="range" name="gameDifficulty" class="setting" id="game-difficulty" min="1" max="10" value="9">
         </div>
         <div class="setting-group">
             <label>Game Area (Row x Cell)</label>
-            <input type="number" id="row-length" class="setting" value="64" />
-            <input type="number" id="cell-length" class="setting" value="64" />
-            <br />
-            <br />
+            <input type="number" id="row-length" class="setting" value="64"/>
+            <input type="number" id="cell-length" class="setting" value="64"/>
+            <br/>
+            <br/>
             <button id="set-game-settings">Set Settings</button>
         </div>
     </div>
 </div>
 
-<script type="text/javascript" src="snake.js"></script>
-<script type="text/javascript" src="core.js"></script>
 </body>
 </html>
